@@ -4,6 +4,8 @@ const count = document.getElementById("count");
 const total = document.getElementById("total");
 const movieSelect = document.getElementById("movie");
 
+populateUi()
+
 let ticketPrice = +movieSelect.Value;
 
 //Save Movie Info
@@ -25,6 +27,13 @@ function updateSelectedCount() {
 
   count.innerText = selectedSeatsCount;
   total.innerText = selectedSeatsCount * ticketPrice;
+}
+
+//get Daata from Local Storage and populate the UI
+
+function populateUi() {
+  const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
+  
 }
 
 // Movie Select Event
