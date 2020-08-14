@@ -50,7 +50,7 @@ nav ul li {
   border-bottom: 2px solid rgba(200, 200, 200, 0.1);
   padding: 20px;
 }
-nav ul li: :first-of-type {
+nav ul li :first-of-type {
   border-top: 2px solid rgba(200, 200, 200, 0.1);
 }
 nav ul li a {
