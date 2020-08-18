@@ -1,10 +1,11 @@
 const postsContainer = document.getElementById("posts-container");
-const loading = document.getElementById("filter");
+const loading = document.querySelector(".loader");
+const filter = document.getElementById("filter");
 
-let limit = 3;
+let limit = 5;
 let page = 1;
 
-// Fetch posts from jsonplaceholder API
+// Fetch posts from API
 async function getPosts() {
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${page}`
@@ -14,6 +15,7 @@ async function getPosts() {
 
   return data;
 }
+
 // Show posts in DOM
 async function showPosts() {
   const posts = await getPosts();
@@ -22,19 +24,21 @@ async function showPosts() {
     const postEl = document.createElement("div");
     postEl.classList.add("post");
     postEl.innerHTML = `
-        <div class="number">${post.id}</div>
-        <div class="post-info">
-          <h2 class="post-title">${post.title}</h2>
-          <p class="post-body">${post.body}</p>
-        </div>
-      `;
+      <div class="number">${post.id}</div>
+      <div class="post-info">
+        <h2 class="post-title">${post.title}</h2>
+        <p class="post-body">${post.body}</p>
+      </div>
+    `;
 
     postsContainer.appendChild(postEl);
   });
 }
-// show oader && fetch more posts
+
+// Show loader & fetch more posts
 function showLoading() {
   loading.classList.add("show");
+
   setTimeout(() => {
     loading.classList.remove("show");
 
@@ -44,6 +48,7 @@ function showLoading() {
     }, 300);
   }, 1000);
 }
+
 // Filter posts by input
 function filterPosts(e) {
   const term = e.target.value.toUpperCase();
@@ -65,10 +70,11 @@ function filterPosts(e) {
 showPosts();
 
 window.addEventListener("scroll", () => {
-  const { scrollTop, scrollHeight, clientHeight } = document.document.Element;
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
   if (scrollTop + clientHeight >= scrollHeight - 5) {
     showLoading();
   }
 });
+
 filter.addEventListener("input", filterPosts);
