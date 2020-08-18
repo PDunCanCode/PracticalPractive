@@ -17,6 +17,7 @@ const words = [
   'pies',
   'juice',
   'warlike',
+  'chrysanthemum',
   'bad',
   'north',
   'dependent',
@@ -35,6 +36,13 @@ const words = [
 let randomWord;
 let score = 0;
 let time =10;
+
+//Set difficulty
+let difficulty = localStorage.getItem('difficulty') !== null ? localStorage.getItem('difficulty') : 'medium';
+
+// Set difficulty select value
+difficultySelect.value = localStorage.getItem('difficulty') !== null ? localStorage.getItem('difficulty') : 'medium';
+
 // FOcus on text on start
 text.focus();
 
@@ -90,7 +98,22 @@ text.addEventListener('input', e => {
         updateScore();
         e.target.value = '';
 
-        time += 5;
+        if(difficulty === 'hard'){
+            time += 3;
+
+        } else if (difficulty === 'medium') {
+            time += 4;
+        } else {
+            time += 5
+        }
         updateTime();
     }
+});
+
+//Setting button click
+
+settingsBtn.addEventListener('click', () => settings.classList.toggle('hide'));
+settingsForm.addEventListener('change', e => {
+    difficulty = e.target.value;
+    localStorage.setIem('difficulty', difficulty);
 });
