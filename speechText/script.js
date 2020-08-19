@@ -100,10 +100,14 @@ function setTextMessage(text) {
   message.text = text;
 }
 
-//Speak the TExt
+//Speak the Text
 
 function speakText() {
   speechSynthesis.speak(message);
+}
+//Set the Voice
+function setVoice(e) {
+  message.voice = voices.find((voice) => voice.name === e.target.value);
 }
 
 speechSynthesis.addEventListener("voiceschanged", getVoices);
@@ -115,5 +119,13 @@ toggleBtn.addEventListener("click", () =>
 closeBtn.addEventListener("click", () =>
   document.getElementById("text-box").classList.remove("show")
 );
+
+//Change the voice
+voicesSelect.addEventListener("change", setVoice);
+// Read text button
+readBtn.addEventListener("click", () => {
+  setTextMessage(textarea.value);
+  speakText();
+});
 
 getVoices();
