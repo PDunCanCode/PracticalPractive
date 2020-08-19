@@ -67,6 +67,53 @@ function createBox(item) {
         <img src="${image}" alt="${text} />
         <p class="info>${text}</p>
     `;
+  box.addEventListener("click", () => {
+    setTextMessage(text);
+    speakText();
+
+    // Add active effect
+    box.classList.add("active");
+    setTimeout(() => box.classList.remove("active"), 800);
+  });
 
   main.appendChild(box);
 }
+
+//Speech Synthesis
+const message = new SpeechSynthesisUtterance();
+
+//Store the voices
+let voices = [];
+function getVoices() {
+  voices = speechSynthesis.getVoices();
+  voices.forEach((voice) => {
+    const option = document.createElement("option");
+    option.value = voice.name;
+    option.innerText = `${voice.name} ${voice.lang}`;
+
+    voicesSelect.appendChild(option);
+  });
+}
+
+//Set the Text
+function setTextMessage(text) {
+  message.text = text;
+}
+
+//Speak the TExt
+
+function speakText() {
+  speechSynthesis.speak(message);
+}
+
+speechSynthesis.addEventListener("voiceschanged", getVoices);
+// Toggle The Text Box
+toggleBtn.addEventListener("click", () =>
+  document.getElementById("text-box").classList.toggle("show")
+);
+// Close button
+closeBtn.addEventListener("click", () =>
+  document.getElementById("text-box").classList.remove("show")
+);
+
+getVoices();
