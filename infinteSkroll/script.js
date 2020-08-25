@@ -6,6 +6,15 @@ let imagesLoaded = 0;
 let totalImages = 0;
 let photosArray = [];
 
+// Check if all images were loaded
+function imageLoaded() {
+  imagesLoaded++;
+  if (imagesLoaded === totalImages) {
+    ready = true;
+    loader.hidden = true;
+  }
+}
+
 //Helper function
 function setAttributes(element, attributes) {
   for (const key in attributes) {
@@ -15,6 +24,8 @@ function setAttributes(element, attributes) {
 
 // Create Elements for Links
 function displayPhotos() {
+  imagesLoaded = 0;
+  totalImages = photosArray.length;
   photosArray.forEach((photo) => {
     const item = document.createElement("a");
 
@@ -28,13 +39,15 @@ function displayPhotos() {
       alt: photo.alt_description,
       title: photo.alt_description,
     });
+    // Event Listener, check when each is finished loading
+    img.addEventListener("load", imageLoaded);
+    // Put <img> inside <a>, then put both inside imageContainer Element
     item.appendChild(img);
     imageContainer.appendChild(item);
   });
 }
 // Unsplash API
 const count = 30;
-// Normally, don't store API Keys like this, but an exception made here because it is free, and the data is publicly available!
 const apiKey = "ttRI_MQgnIWeN9KoZu-VqNSWn0TluV0l1vghEYU0Ygs";
 const apiUrl = `https://api.unsplash.com/photos/random?client_id=${apiKey}&count=${count}`;
 
@@ -46,6 +59,17 @@ async function getPhotos() {
     const photosArray = await response.json();
   } catch (error) {}
 }
+
+//Event Listeners
+window.addEventListener("scroll", () => {
+  if (
+    window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000 &&
+    ready
+  ) {
+    ready = false;
+    getPhotos();
+  }
+});
 
 // On Load
 getPhotos();
