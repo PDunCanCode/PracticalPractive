@@ -5,14 +5,12 @@ const twitterBtn = document.getElementById("twitter");
 const newQuoteBtn = document.getElementById("new-quote");
 const loader = document.getElementById("loader");
 
-// Loading Spinner Shown
-function loading() {
+function showLoadingSpinner() {
   loader.hidden = false;
   quoteContainer.hidden = true;
 }
 
-// Remove Loading Spinner
-function complete() {
+function removeLoadingSpinner() {
   if (!loader.hidden) {
     quoteContainer.hidden = false;
     loader.hidden = true;
@@ -21,6 +19,7 @@ function complete() {
 
 //Get a quote from the api
 async function getQuote() {
+  showLoadingSpinner();
   const proxyUrl = "https://cors-anywhere.herokuapp.com/";
   const apiUrl =
     "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json";
@@ -39,6 +38,7 @@ async function getQuote() {
     }
 
     quoteText.innerText = data.quoteText;
+    removeLoadingSpinner();
   } catch (error) {
     getQuote();
   }
