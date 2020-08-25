@@ -5,6 +5,20 @@ const twitterBtn = document.getElementById("twitter");
 const newQuoteBtn = document.getElementById("new-quote");
 const loader = document.getElementById("loader");
 
+// Loading Spinner Shown
+function loading() {
+  loader.hidden = false;
+  quoteContainer.hidden = true;
+}
+
+// Remove Loading Spinner
+function complete() {
+  if (!loader.hidden) {
+    quoteContainer.hidden = false;
+    loader.hidden = true;
+  }
+}
+
 //Get a quote from the api
 async function getQuote() {
   const proxyUrl = "https://cors-anywhere.herokuapp.com/";
