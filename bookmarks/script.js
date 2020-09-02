@@ -1,0 +1,1 @@
+const theInitial = this.line;
