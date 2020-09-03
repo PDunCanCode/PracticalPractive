@@ -91,7 +91,18 @@ function fetchBookmarks() {
   }
   buildBookmarks();
 }
-
+// Delete Bookmark
+function deleteBookmark(url) {
+  // Loop through the bookmarks array
+  bookmarks.forEach((bookmark, i) => {
+    if (bookmark.url === url) {
+      bookmarks.splice(i, 1);
+    }
+  });
+  // Update bookmarks array in localStorage, re-populate DOM
+  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  fetchBookmarks();
+}
 function storeBookmark(e) {
   e.preventDefault();
   const nameValue = websiteNameEl.value;
