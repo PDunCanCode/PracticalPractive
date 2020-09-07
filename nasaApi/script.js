@@ -37,6 +37,7 @@ function updateDOM() {
     const saveText = document.createElement("p");
     saveText.classList.add("clickable");
     saveText.textContent = "Add to Favorites";
+    saveText.setAttribute("onclick", `saveFavorite('${result.url})`);
     //CardText
     const cardText = document.createElement("p");
     cardText.textContent = result.explanation;
@@ -66,9 +67,24 @@ async function getNasaPictures() {
   try {
     const response = await fetch(apiUrl);
     resultsArray = await response.json();
+    updateDOM("results");
   } catch (error) {
     //catch errorssss
   }
 }
 
+//Add REsult to Favs
+function saveFavorite(itemUrl) {
+  resultsArray.forEach((item) => {
+    if (item.url.includes(itemUrl) && !favorite[itemUrl]) {
+      favorites[itemUrl] = item;
+      //show saved
+      saveConfirmed.hidden = false;
+      setTimeout(() => {
+        saveConfirmed.hidden = true;
+      }, 2000);
+      localStorage.setItem("nasaFavorites", JSON.stringify(favorites));
+    }
+  });
+}
 getNasaPictures();
