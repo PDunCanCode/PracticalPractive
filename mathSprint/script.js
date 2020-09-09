@@ -17,3 +17,36 @@ const finalTimeEl = document.querySelector(".final-time");
 const baseTimeEl = document.querySelector(".base-time");
 const penaltyTimeEl = document.querySelector(".penalty-time");
 const playAgainBtn = document.querySelector(".play-again");
+
+//Equations
+let questionAmount = 0;
+let equationsArray = [];
+
+function getRadioValue() {
+  let radioValue;
+  radioInputs.forEach((radioInput) => {
+    if (radioInput.checked) {
+      radioValue = radioInput.value;
+    }
+  });
+  return radioValue;
+}
+//Form for Amount of Questions
+
+function selectQuestionAmount(e) {
+  e.preventDefault();
+  questionAmount = getRadioValue();
+}
+
+//Event Listeners
+
+startForm.addEventListener("click", () => {
+  radioContainers.forEach((radioEl) => {
+    radioEl.classList.remove("selected-label");
+    if (radioEl.children[1].checked) {
+      radioEl.classList.add("selected-label");
+    }
+  });
+});
+
+startForm.addEventListener("submit", selectQuestionAmount);
