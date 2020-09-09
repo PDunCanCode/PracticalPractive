@@ -21,12 +21,64 @@ const playAgainBtn = document.querySelector(".play-again");
 //Equations
 let questionAmount = 0;
 let equationsArray = [];
+let playerGuessArray = [];
 // Game Page
 let firstNumber = 0;
 let secondNumber = 0;
 let equationObject = {};
 const wrongFormat = [];
 
+//Time
+let timer;
+let timePlayed = 0;
+let baseTime = 0;
+let penaltyTime = 0;
+let finalTime = 0;
+let finalTimeDisplay = "0.0s";
+
+//Scroll
+let valueY = 0;
+
+//Stop Time ProcessResults
+function checkTime() {
+  if (playerGuessArray.length === questionAmount) {
+    clearInterval(timer);
+    equationsArray.forEach((equation, index) => {
+      if (equation.evaluated === playerGuessArray[index]) {
+      } else {
+        penaltyTime += 0.5;
+      }
+    });
+    finalTime = timePlayed + penaltyTime;
+  }
+}
+function addTime() {
+  timePlayed += 0.1;
+  checkTime();
+}
+//Start Timer
+function startTimer() {
+  //Reset Time
+  timePlayed = 0;
+  penaltyTime = 0;
+  finalTime = 0;
+  timer = setInterval(addTime, 100);
+  gamePage.removeEventListener("click", startTimer);
+}
+
+function select(guessedTrue) {
+  valuY += 80;
+  itemContainer.scroll(0, valueY);
+  return guessedTrue
+    ? playerGuessArray.push("true")
+    : playerGuessArray.push("false");
+}
+
+// Displays Game Page
+function showGamePage() {
+  gamePage.hidden = false;
+  countdownPage.hidden = true;
+}
 // Create Correct/Incorrect Random Equations
 function createEquations() {
   // Randomly choose how many correct equations there should be
@@ -146,3 +198,4 @@ startForm.addEventListener("click", () => {
 });
 
 startForm.addEventListener("submit", selectQuestionAmount);
+gamePage.addEventListener("click", startTimer);
