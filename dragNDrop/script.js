@@ -38,8 +38,6 @@ function getSavedColumns() {
     onHoldListArray = ["Being uncool"];
   }
 }
-getSavedColumns();
-updateSavedColumns();
 
 // Set localStorage Arrays
 function updateSavedColumns() {
@@ -58,18 +56,30 @@ function updateSavedColumns() {
   });
 }
 
-//Create DOM elements
-function createItemEl() {
-  const listEl = document.createElement("li");
-  listEl.classList.add("drag-item");
-  listEl.textContent = item;
-  listEl.draggable = true;
-  listEl.setAttribute("ondragstart", "drag(event)");
-
-  //Apend
-  currentColumn.appendChild(listEl);
+// Filter Array to remove empty values
+function filterArray(array) {
+  const filteredArray = array.filter((item) => item !== null);
+  return filteredArray;
 }
+
+// Create DOM Elements for each list item
+function createItemEl(columnEl, column, item, index) {
+  // List Item
+  const listEl = document.createElement("li");
+  listEl.textContent = item;
+  listEl.id = index;
+  listEl.classList.add("drag-item");
+  listEl.draggable = true;
+  listEl.setAttribute("onfocusout", `updateItem(${index}, ${column})`);
+  listEl.setAttribute("ondragstart", "drag(event)");
+  listEl.contentEditable = true;
+  // Append
+  columnEl.appendChild(listEl);
+}
+
+// Update Columns in DOM - Reset HTML, Filter Array, Update localStorage
 function updateDOM() {
+  // Check localStorage once
   if (!updatedOnLoad) {
     getSavedColumns();
   }
@@ -139,6 +149,7 @@ function hideInputBox(column) {
   addItemContainers[column].style.display = "none";
   addToColumn(column);
 }
+
 // Allows arrays to reflect Drag and Drop items
 function rebuildArrays() {
   backlogListArray = [];
