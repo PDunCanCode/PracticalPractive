@@ -22,18 +22,36 @@ function addDecimal() {
     calculatorDisplay.textContent = `${calculatorDisplay.textContent}.`;
   }
 }
+//Calculate first and second Values
+const calculate = {
+  "/": (firstNumber, secondNumber) => firstNumber / secondNumber,
+
+  "*": (firstNumber, secondNumber) => firstNumber * secondNumber,
+
+  "+": (firstNumber, secondNumber) => firstNumber + secondNumber,
+
+  "-": (firstNumber, secondNumber) => firstNumber - secondNumber,
+
+  "=": (firstNumber, secondNumber) => secondNumber,
+};
 
 function useOperator(operator) {
-  const currentValue = Number(calculatoDisplay.textContent);
+  const currentValue = Number(calculatorDisplay.textContent);
+  if (operatorValue && awaitingNextValue) return;
   //Assign First Value
   if (!firstValue) {
     firstValue = currentValue;
   } else {
+    const calculation = calculate[operatorValue](firstValue, currentValue);
+    calculatorDisplay.textContent = calculation;
+    firstValue = calculation;
   }
+  // Ready for next value, store operator
+  awaitingNextValue = true;
   operatorValue = operator;
 }
 
-//Add Listeners for numbers, operators etc
+// Add Event Listeners for numbers, operators, decimal
 inputBtns.forEach((inputBtn) => {
   if (inputBtn.classList.length === 0) {
     inputBtn.addEventListener("click", () => sendNumberValue(inputBtn.value));
@@ -44,8 +62,7 @@ inputBtns.forEach((inputBtn) => {
   }
 });
 
-//RESET DISPLAY
-
+// Reset all values, display
 function resetAll() {
   firstValue = 0;
   operatorValue = "";
@@ -53,6 +70,5 @@ function resetAll() {
   calculatorDisplay.textContent = "0";
 }
 
-//EventListener
-
+// Event Listener
 clearBtn.addEventListener("click", resetAll);
