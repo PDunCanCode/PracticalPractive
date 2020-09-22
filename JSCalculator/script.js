@@ -1,6 +1,18 @@
 const calculatorDisplay = doument.querySelector("h1");
 const inputBtns = document.querySelectorAll("button");
 const clearBtn = document.getElementById("clear-btn");
+//Calculate first and second Values
+const calculate = {
+  "/": (firstNumber, secondNumber) => firstNumber / secondNumber,
+
+  "*": (firstNumber, secondNumber) => firstNumber * secondNumber,
+
+  "+": (firstNumber, secondNumber) => firstNumber + secondNumber,
+
+  "-": (firstNumber, secondNumber) => firstNumber - secondNumber,
+
+  "=": (firstNumber, secondNumber) => secondNumber,
+};
 
 let firstValue = 0;
 let operatorValue = "";
@@ -22,18 +34,6 @@ function addDecimal() {
     calculatorDisplay.textContent = `${calculatorDisplay.textContent}.`;
   }
 }
-//Calculate first and second Values
-const calculate = {
-  "/": (firstNumber, secondNumber) => firstNumber / secondNumber,
-
-  "*": (firstNumber, secondNumber) => firstNumber * secondNumber,
-
-  "+": (firstNumber, secondNumber) => firstNumber + secondNumber,
-
-  "-": (firstNumber, secondNumber) => firstNumber - secondNumber,
-
-  "=": (firstNumber, secondNumber) => secondNumber,
-};
 
 function useOperator(operator) {
   const currentValue = Number(calculatorDisplay.textContent);
@@ -51,17 +51,6 @@ function useOperator(operator) {
   operatorValue = operator;
 }
 
-// Add Event Listeners for numbers, operators, decimal
-inputBtns.forEach((inputBtn) => {
-  if (inputBtn.classList.length === 0) {
-    inputBtn.addEventListener("click", () => sendNumberValue(inputBtn.value));
-  } else if (inputBtn.classList.contains("operator")) {
-    inputBtn.addEventListener("click", () => useOperator(inputBtn.value));
-  } else if (inputBtn.classList.contains("decimal")) {
-    inputBtn.addEventListener("click", () => addDecimal());
-  }
-});
-
 // Reset all values, display
 function resetAll() {
   firstValue = 0;
@@ -72,3 +61,13 @@ function resetAll() {
 
 // Event Listener
 clearBtn.addEventListener("click", resetAll);
+// Add Event Listeners for numbers, operators, decimal
+inputBtns.forEach((inputBtn) => {
+  if (inputBtn.classList.length === 0) {
+    inputBtn.addEventListener("click", () => sendNumberValue(inputBtn.value));
+  } else if (inputBtn.classList.contains("operator")) {
+    inputBtn.addEventListener("click", () => useOperator(inputBtn.value));
+  } else if (inputBtn.classList.contains("decimal")) {
+    inputBtn.addEventListener("click", () => addDecimal());
+  }
+});
