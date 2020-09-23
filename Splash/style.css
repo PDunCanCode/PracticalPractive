@@ -16,3 +16,10 @@ body {
     #fff9f5 94.19%
   );
 }
+.wrapper {
+  position: relative;
+  width: 1440px;
+  min-height: 100vh;
+  margin: auto;
+  background: dodgerblue;
+}
