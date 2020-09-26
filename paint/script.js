@@ -23,6 +23,19 @@ let isEraser = false;
 let isMouseDown = false;
 let drawnArray = [];
 
+function displayBrushSize() {
+  if (brushSlider.value < 10) {
+    brushSize.textContent = `0${brushSlider.value}`;
+  } else {
+    brushSize.textContent = brushSlider.value;
+  }
+}
+
+brushSlider.addEventListener("change", () => {
+  currentSize = brushSlider.value;
+  displayBrushSize();
+});
+
 // Sett the BRUSH color
 brushColorBtn.addEventListener("change", () => {
   isEraser = false;
@@ -53,6 +66,8 @@ function switchToBrush() {
   eraser.style.color = "white";
   currentColor = `#${brushColorBtn.value}`;
   currentSize = 10;
+  brushSlider.value = 10;
+  displayBrushSize();
 }
 
 //Create Canvas
@@ -62,4 +77,11 @@ function createCanvas() {
   context.fillStyle = bucketColor;
   context.fillRect(0, 0, canvas.width, canvas.height);
   body.appendChild(canvas);
+  switchToBrush();
 }
+
+// Event Listener
+brushIcon.addEventListener("click", switchToBrush);
+
+// On Load
+createCanvas();
