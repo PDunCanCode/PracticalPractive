@@ -23,6 +23,38 @@ let isEraser = false;
 let isMouseDown = false;
 let drawnArray = [];
 
+// Sett the BRUSH color
+brushColorBtn.addEventListener("change", () => {
+  isEraser = false;
+  currentColor = `#${brushColorBtn.value}`;
+});
+
+//Setting Background Color
+bucketColorBtn.addEventListener("change", () => {
+  bucketColor = `#${bucketColorBtn.value}`;
+  createCanvas();
+});
+
+//Eraser
+eraser.addEventListener("click", () => {
+  isEraser = true;
+  brushIcon.style.color = "white";
+  eraser.style.color = "black";
+  activeToolEl.textContent = "Eraser";
+  currentColor = bucketColor;
+  currentSize = 50;
+});
+
+//Switch back to BRUSH
+function switchToBrush() {
+  isEraser = false;
+  activeToolEl.textContent = "Brush";
+  brushIcon.style.color = "black";
+  eraser.style.color = "white";
+  currentColor = `#${brushColorBtn.value}`;
+  currentSize = 10;
+}
+
 //Create Canvas
 function createCanvas() {
   canvas.width = window.innerWidth;
