@@ -79,6 +79,22 @@ function createCanvas() {
   body.appendChild(canvas);
   switchToBrush();
 }
+// Draw what is stored in DrawnArray
+function restoreCanvas() {
+  for (let i = 1; i < drawnArray.length; i++) {
+    context.beginPath();
+    context.moveTo(drawnArray[i - 1].x, drawnArray[i - 1].y);
+    context.lineWidth = drawnArray[i].size;
+    context.lineCap = "round";
+    if (drawnArray[i].eraser) {
+      context.strokeStyle = bucketColor;
+    } else {
+      context.strokeStyle = drawnArray[i].color;
+    }
+    context.lineTo(drawnArray[i].x, drawnArray[i].y);
+    context.stroke();
+  }
+}
 
 // Store Drawn Lines in DrawnArray
 function storeDrawn(x, y, size, color, erase) {
