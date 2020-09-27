@@ -80,6 +80,18 @@ function createCanvas() {
   switchToBrush();
 }
 
+// Store Drawn Lines in DrawnArray
+function storeDrawn(x, y, size, color, erase) {
+  const line = {
+    x,
+    y,
+    size,
+    color,
+    erase,
+  };
+  drawnArray.push(line);
+}
+
 // Get Mouse Position
 function getMousePosition(event) {
   const boundaries = canvas.getBoundingClientRect();
