@@ -46,6 +46,7 @@ brushColorBtn.addEventListener("change", () => {
 bucketColorBtn.addEventListener("change", () => {
   bucketColor = `#${bucketColorBtn.value}`;
   createCanvas();
+  restoreCanvas();
 });
 
 //Eraser
